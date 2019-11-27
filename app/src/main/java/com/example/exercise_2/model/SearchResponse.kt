@@ -27,3 +27,14 @@ data class Result (
     val incomplete_results: Boolean,
     val items: List<User>
 )
+
+/**
+ * Search result for query "GET request for single employee"
+ */
+data class SingleEmployee (
+    val id: Int,
+    val employee_name: String,
+    val employee_salary: Int,
+    val employee_age: Int,
+    val profile_image: String
+)

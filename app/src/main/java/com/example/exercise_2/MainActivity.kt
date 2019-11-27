@@ -24,12 +24,13 @@ class MainActivity : AppCompatActivity() {
         val repository = SearchRepositoryProvider.provideSearchRepository()
 
         compositeDisposable.add(
-            repository.searchUsers("dummy", "Java")
+            repository.searchUsers(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe ({
                         result ->
-                    Log.d("Result", "There are ${result.items.size} Java developers in Lagos")
+                    Log.d("Result", "Herr ${result.employee_name} ist Mitarbeiter der Firma X")
+                    println("Herr ${result.employee_name} ist Mitarbeiter der Firma X")
                 }, { error ->
                     error.printStackTrace()
                 })

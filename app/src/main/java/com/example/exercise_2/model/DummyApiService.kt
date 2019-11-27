@@ -9,23 +9,28 @@ import retrofit2.http.Query
 
 interface DummyApiService {
 
-    @GET("search/users")
+    /**
+     * GET Request for a single employee
+     */
+    @GET("employee/{id}")
     fun search(
         @Query("q") query: String
-    ): Observable<Result>
+    ): Observable<SingleEmployee>
 
     /**
-     * Companion object to create the GithubApiService
+     * Companion object to create the DummyApiService
      */
     companion object Factory {
         fun create(): DummyApiService {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://api.github.com/")
+                .baseUrl("http://dummy.restapiexample.com/api/v1/")
                 .build()
 
             return retrofit.create(DummyApiService::class.java)
         }
     }
 }
+
+// http://dummy.restapiexample.com/api/v1/employee/1
