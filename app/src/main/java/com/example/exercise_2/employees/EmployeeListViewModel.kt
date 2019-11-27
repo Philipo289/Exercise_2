@@ -30,7 +30,7 @@ class EmployeeListViewModel : ViewModel() {
         coroutineScope.launch {
             // Get the Deferred object for our Retrofit request
             // TODO (04) Add filter to getProperties() with filter.value
-            var getPropertiesDeferred = EmployeeApi.retrofitService.getProperties()
+            var getPropertiesDeferred = EmployeeApi.retrofitService.getPropertiesAsync()
             try {
                 // this will run on a thread managed by Retrofit
                 val listResult = getPropertiesDeferred.await()

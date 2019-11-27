@@ -8,5 +8,30 @@
         android:id="@+id/employeeList"
         android:name="com.example.exercise_2.employees.EmployeeListFragment"
         android:label="fragment_employee_list"
-        tools:layout="@layout/fragment_employee_list" />
+        tools:layout="@layout/fragment_employee_list" >
+        <action
+            android:id="@+id/action_employeeList_to_newEmployeeFragment2"
+            app:destination="@id/newEmployeeFragment2" />
+        <action
+            android:id="@+id/action_employeeList_to_employeeSingleViewFragment"
+            app:destination="@id/employeeSingleViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeSingleViewFragment"
+        android:name="com.example.exercise_2.employeeSingleView.EmployeeSingleViewFragment"
+        android:label="fragment_employee_single_view"
+        tools:layout="@layout/fragment_employee_single_view" >
+        <action
+            android:id="@+id/action_employeeSingleViewFragment_to_employeeList"
+            app:destination="@id/employeeList" />
+    </fragment>
+    <fragment
+        android:id="@+id/newEmployeeFragment2"
+        android:name="com.example.exercise_2.employeeNew.EmployeeNewFragment"
+        android:label="fragment_new_employee"
+        tools:layout="@layout/fragment_new_employee" >
+        <action
+            android:id="@+id/action_newEmployeeFragment2_to_employeeList"
+            app:destination="@id/employeeList" />
+    </fragment>
 </navigation>

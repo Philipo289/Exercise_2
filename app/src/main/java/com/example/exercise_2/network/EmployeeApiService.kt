@@ -17,13 +17,14 @@
 
 package com.example.exercise_2.network
 
+import android.database.Observable
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
 import kotlinx.coroutines.Deferred
+import retrofit2.http.*
 
 private const val BASE_URL = "http://dummy.restapiexample.com/api/v1/"
 // TODO (01) Create an enum full of constants to match the query values our web service expects
@@ -56,11 +57,48 @@ interface EmployeeApiService {
      * The @GET annotation indicates that the "realestate" endpoint will be requested with the GET
      * HTTP method
      */
-    // TODO (02) Add filter @Query value to the getProperties method
     @GET("employees")
-    fun getProperties():
-    // The Coroutine Call Adapter allows us to return a Deferred, a Job with a result
-            Deferred<List<EmployeeProperty>>
+    fun getPropertiesAsync(
+        @Query("q") query: String
+    ): Deferred<List<EmployeeProperty>>
+
+    /**
+     * GET Request to search for an single employee
+     */
+    @GET("employee/{id}")
+    fun searchAsync(
+        @Query("q") query: String
+    ): Observable<EmployeeProperty>
+
+    /**
+     * POST request to create a new employee
+     * --> beim Observable muss man eventuell noch das Datenfeld anpassen!
+     */
+    @POST("create")
+    fun createAsync(
+        @Query("q") query: String
+    ): Observable<EmployeeProperty>
+
+
+    /**
+     * PUT request to update an employee
+     * --> beim Observable muss man eventuell noch das Datenfeld anpassen!
+     */
+    @PUT("update/{id}")
+    fun updateAsync(
+        @Query("q") query: String
+    ): Observable<EmployeeProperty>
+
+
+    /**
+     * DELETE request to delete an employee
+     * --> beim Observable muss man eventuell noch das Datenfeld anpassen!
+     */
+    @DELETE("delete/{id}")
+    fun deleteAsync(
+        @Query("q") query: String
+    ): Observable<EmployeeProperty>
+
 }
 
 /**
@@ -69,3 +107,4 @@ interface EmployeeApiService {
 object EmployeeApi {
     val retrofitService : EmployeeApiService by lazy { retrofit.create(EmployeeApiService::class.java) }
 }
+
