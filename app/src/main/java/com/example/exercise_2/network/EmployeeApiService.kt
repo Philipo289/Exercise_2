@@ -59,7 +59,6 @@ interface EmployeeApiService {
      */
     @GET("employees")
     fun getPropertiesAsync(
-        @Query("q") query: String
     ): Deferred<List<EmployeeProperty>>
 
     /**
