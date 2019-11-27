@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 
 class EmployeeListViewModel : ViewModel() {
 
-    private val _employees = MutableLiveData<List<EmployeeProperty>>()
     val employees : LiveData<List<EmployeeProperty>>
         get() = _employees
+    private val _employees = MutableLiveData<List<EmployeeProperty>>()
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
@@ -36,7 +36,7 @@ class EmployeeListViewModel : ViewModel() {
                 val listResult = getPropertiesDeferred.await()
                 _employees.value = listResult
             } catch (e: Exception) {
-                _employees.value = ArrayList()
+
             }
         }
     }
