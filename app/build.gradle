@@ -76,4 +76,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$version_kotlin"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //InternetListener
+    compile 'com.treebo:internetavailabilitychecker:1.0.4'
 }

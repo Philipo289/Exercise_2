@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.exercise_2.network.EmployeeApi
 import com.example.exercise_2.network.EmployeeProperty
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -20,6 +21,8 @@ class EmployeeListViewModel : ViewModel() {
 
     private val _status = MutableLiveData<EmployeeApiStatus>()
 
+    private var mInternetAvailabilityChecker: InternetAvailabilityChecker = InternetAvailabilityChecker.getInstance()
+
 
     val employees : LiveData<List<EmployeeProperty>>
         get() = _employees
@@ -30,6 +33,7 @@ class EmployeeListViewModel : ViewModel() {
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
+    // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val _navigateToSelectedProperty = MutableLiveData<EmployeeProperty>()
@@ -39,9 +43,11 @@ class EmployeeListViewModel : ViewModel() {
 
     init {
         getEmployees()
+        //mInternetAvailabilityChecker.addInternetConnectivityListener(this)
     }
 
     private fun getEmployees() {
+
         coroutineScope.launch {
             // Get the Deferred object for our Retrofit request
             // TODO (04) Add filter to getProperties() with filter.value
@@ -62,6 +68,14 @@ class EmployeeListViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun onInternetConnectivityChanged(isConnected: Boolean) {
+        if (isConnected) {
+            getEmployees()
+        } else {
+            //mTvStatus.setText("not connected")
+        }
     }
 
     fun displayPropertyDetails(employeeProperty: EmployeeProperty) {

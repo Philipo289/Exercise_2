@@ -66,8 +66,7 @@ interface EmployeeApiService {
      */
     @GET("employee/{id}")
     fun searchAsync(
-        @Query("q") query: String
-    ): Observable<EmployeeProperty>
+    ): Deferred<EmployeeProperty>
 
     /**
      * POST request to create a new employee
@@ -75,8 +74,7 @@ interface EmployeeApiService {
      */
     @POST("create")
     fun createAsync(
-        @Query("q") query: String
-    ): Observable<EmployeeProperty>
+    ): Deferred<EmployeeProperty>
 
 
     /**
@@ -85,8 +83,7 @@ interface EmployeeApiService {
      */
     @PUT("update/{id}")
     fun updateAsync(
-        @Query("q") query: String
-    ): Observable<EmployeeProperty>
+    ): Deferred<EmployeeProperty>
 
 
     /**
@@ -95,8 +92,7 @@ interface EmployeeApiService {
      */
     @DELETE("delete/{id}")
     fun deleteAsync(
-        @Query("q") query: String
-    ): Observable<EmployeeProperty>
+    ): Deferred<EmployeeProperty>
 
 }
 
