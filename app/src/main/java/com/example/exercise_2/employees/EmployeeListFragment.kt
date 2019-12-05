@@ -26,14 +26,14 @@ class EmployeeListFragment : Fragment() {
     private val viewModel: EmployeeListViewModel by lazy {
         ViewModelProviders.of(this).get(EmployeeListViewModel::class.java)
     }
-
+    
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
         val binding = FragmentEmployeeListBinding.inflate(inflater)
-        // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.setLifecycleOwner(this)
 
         // Giving the binding access to the OverviewViewModel
@@ -47,7 +47,6 @@ class EmployeeListFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
-
         return binding.root
     }
 

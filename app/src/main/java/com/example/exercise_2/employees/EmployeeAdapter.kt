@@ -1,5 +1,6 @@
 package com.example.exercise_2.employees
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -24,9 +25,10 @@ class EmployeeAdapter : ListAdapter<EmployeeProperty, EmployeeAdapter.ViewHolder
         : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: EmployeeProperty) {
-            binding.tvFullName.text = item.employeeName ?: ""
-            binding.tvAge.text = item.employeeAge.toString() ?: ""
-            binding.executePendingBindings() ?: ""
+            binding.tvFullName.text = item.employeeName
+            binding.tvAge.text = item.employeeAge.toString()
+            binding.tvSalary.text = item.employeeSalary.toString()
+            binding.executePendingBindings()
         }
 
         companion object {
@@ -46,10 +48,11 @@ class EmployeeAdapter : ListAdapter<EmployeeProperty, EmployeeAdapter.ViewHolder
  */
 class EmployeePropertyDiffCallback : DiffUtil.ItemCallback<EmployeeProperty>() {
     override fun areItemsTheSame(oldItem: EmployeeProperty, newItem: EmployeeProperty): Boolean {
-        return oldItem.id == newItem.id
+        Log.i("TEST", "OldItem ${oldItem.id} , NewItem ${newItem.id}")
+        return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: EmployeeProperty, newItem: EmployeeProperty): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 }

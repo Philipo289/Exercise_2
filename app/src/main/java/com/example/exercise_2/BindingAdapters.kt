@@ -17,9 +17,12 @@
 
 package com.example.exercise_2
 
+import android.view.View
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exercise_2.employees.EmployeeAdapter
+import com.example.exercise_2.employees.EmployeeApiStatus
 import com.example.exercise_2.network.EmployeeProperty
 
 /**
@@ -29,4 +32,27 @@ import com.example.exercise_2.network.EmployeeProperty
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<EmployeeProperty>?) {
     val adapter = recyclerView.adapter as EmployeeAdapter
     adapter.submitList(data)
+}
+
+/**
+ * This binding adapter displays the [MarsApiStatus] of the network request in an image view.  When
+ * the request is loading, it displays a loading_animation.  If the request has an error, it
+ * displays a broken image to reflect the connection error.  When the request is finished, it
+ * hides the image view.
+ */
+@BindingAdapter("employeeApiStatus")
+fun bindStatus(statusImageView: ImageView, status: EmployeeApiStatus?) {
+    when (status) {
+        EmployeeApiStatus.LOADING -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.loading_animation)
+        }
+        EmployeeApiStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_connection_error)
+        }
+        EmployeeApiStatus.DONE -> {
+            statusImageView.visibility = View.GONE
+        }
+    }
 }
