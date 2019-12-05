@@ -23,6 +23,8 @@ In der App werden die Employee Daten der Dummy API angezeigt. Sollte die App ges
 |                | EmplyeeItem          |                      |
 |                | FragmentDetail       | DetailViewModel      |
 
------> |Dummy REST API |
-       | ------------- |
-       |               |
+-----> 
+
+|Dummy REST API |
+| ------------- |
+|               |
