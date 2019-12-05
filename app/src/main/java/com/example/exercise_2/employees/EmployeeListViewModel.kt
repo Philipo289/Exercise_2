@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.exercise_2.network.EmployeeApi
 import com.example.exercise_2.network.EmployeeProperty
 import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 enum class EmployeeApiStatus { LOADING, ERROR, DONE }
 
-class EmployeeListViewModel : ViewModel() {
+class EmployeeListViewModel : ViewModel(), InternetConnectivityListener {
 
     val status : LiveData<EmployeeApiStatus>
         get() = _status
@@ -43,14 +44,12 @@ class EmployeeListViewModel : ViewModel() {
 
     init {
         getEmployees()
-        //mInternetAvailabilityChecker.addInternetConnectivityListener(this)
+        mInternetAvailabilityChecker.addInternetConnectivityListener(this)
     }
 
     private fun getEmployees() {
 
         coroutineScope.launch {
-            // Get the Deferred object for our Retrofit request
-            // TODO (04) Add filter to getProperties() with filter.value
             var getPropertiesDeferred = EmployeeApi.retrofitService.getPropertiesAsync()
             try {
                 _status.value = EmployeeApiStatus.LOADING
@@ -70,7 +69,7 @@ class EmployeeListViewModel : ViewModel() {
         viewModelJob.cancel()
     }
 
-    fun onInternetConnectivityChanged(isConnected: Boolean) {
+    override fun onInternetConnectivityChanged(isConnected: Boolean) {
         if (isConnected) {
             getEmployees()
         } else {

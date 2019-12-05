@@ -39,14 +39,5 @@ class DetailViewModel(employeeProperty: EmployeeProperty, app: Application) : An
     init {
         _selectedProperty.value = employeeProperty
     }
-
-    // The displayPropertyPrice formatted Transformation Map LiveData, which displays the sale
-    // or rental price.
-    val displayPropertyPrice = Transformations.map(selectedProperty) {
-    }
-
-    // The displayPropertyType formatted Transformation Map LiveData, which displays the
-    // "For Rent/Sale" String
-    val displayPropertyType = Transformations.map(selectedProperty) {
-    }
 }
+
