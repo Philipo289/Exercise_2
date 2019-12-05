@@ -17,5 +17,9 @@ In der App werden die Employee Daten der Dummy API angezeigt. Sollte die App ges
 
 
 ### APP-Architektur
+| Model          | View                 | Viewmodel |
+| -------------  | --------------       | ------    |
+|                | FragmentEmployerList |           |
+|                | EmplyeeItem          |           |
+|                | FragmentDetail       |           |
 
-Architektur-Model
