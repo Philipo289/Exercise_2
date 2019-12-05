@@ -1,11 +1,12 @@
 package com.example.exercise_2.employees
 
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.exercise_2.network.EmployeeApi
 import com.example.exercise_2.network.EmployeeProperty
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -13,12 +14,14 @@ import kotlinx.coroutines.launch
 
 enum class EmployeeApiStatus { LOADING, ERROR, DONE }
 
-class EmployeeListViewModel : ViewModel() {
+class EmployeeListViewModel : ViewModel(), InternetConnectivityListener {
 
     val status : LiveData<EmployeeApiStatus>
         get() = _status
 
     private val _status = MutableLiveData<EmployeeApiStatus>()
+
+    private var mInternetAvailabilityChecker: InternetAvailabilityChecker = InternetAvailabilityChecker.getInstance()
 
 
     val employees : LiveData<List<EmployeeProperty>>
@@ -35,9 +38,11 @@ class EmployeeListViewModel : ViewModel() {
 
     init {
         getEmployees()
+        mInternetAvailabilityChecker.addInternetConnectivityListener(this)
     }
 
     private fun getEmployees() {
+
         coroutineScope.launch {
             // Get the Deferred object for our Retrofit request
             // TODO (04) Add filter to getProperties() with filter.value
@@ -58,9 +63,16 @@ class EmployeeListViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+        mInternetAvailabilityChecker.removeInternetConnectivityChangeListener(this)
     }
 
-
+    override fun onInternetConnectivityChanged(isConnected: Boolean) {
+        if (isConnected) {
+            getEmployees()
+        } else {
+            //mTvStatus.setText("not connected")
+        }
+    }
 
 
 }
