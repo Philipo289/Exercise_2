@@ -38,7 +38,6 @@ class EmployeeAdapter : ListAdapter<EmployeeProperty, EmployeeAdapter.ViewHolder
         }
     }
 }
-
 /**
  * Callback for calculating the diff between two non-null items in a list.
  *

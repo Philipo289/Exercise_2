@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.exercise_2.R
 import com.example.exercise_2.databinding.FragmentEmployeeListBinding
 import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
 import com.example.exercise_2.MainActivity
 import kotlinx.android.synthetic.main.fragment_employee_list.*
 
@@ -31,13 +32,22 @@ class EmployeeListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
         val binding = FragmentEmployeeListBinding.inflate(inflater)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.setLifecycleOwner(this)
 
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
+
+        val adapter = EmployeeAdapter()
+        binding.viewEmployees.adapter = adapter
+
+        viewModel.employees.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
+
         return binding.root
     }
 
