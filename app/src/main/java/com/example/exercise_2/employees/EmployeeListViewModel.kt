@@ -30,8 +30,12 @@ class EmployeeListViewModel : ViewModel() {
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
-    // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    private val _navigateToSelectedProperty = MutableLiveData<EmployeeProperty>()
+
+    val navigateToSelectedProperty: LiveData<EmployeeProperty>
+        get() = _navigateToSelectedProperty
 
     init {
         getEmployees()
@@ -60,7 +64,11 @@ class EmployeeListViewModel : ViewModel() {
         viewModelJob.cancel()
     }
 
+    fun displayPropertyDetails(employeeProperty: EmployeeProperty) {
+        _navigateToSelectedProperty.value = employeeProperty
+    }
 
-
-
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
+    }
 }

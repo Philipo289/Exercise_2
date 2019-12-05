@@ -10,7 +10,7 @@ import com.example.exercise_2.databinding.EmployeeItemBinding
 import com.example.exercise_2.network.EmployeeProperty
 
 
-class EmployeeAdapter : ListAdapter<EmployeeProperty, EmployeeAdapter.ViewHolder>(EmployeePropertyDiffCallback()) {
+class EmployeeAdapter(val onClickListener : OnClickListener) : ListAdapter<EmployeeProperty, EmployeeAdapter.ViewHolder>(EmployeePropertyDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -25,9 +25,7 @@ class EmployeeAdapter : ListAdapter<EmployeeProperty, EmployeeAdapter.ViewHolder
         : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: EmployeeProperty) {
-            binding.tvFullName.text = item.employeeName
-            binding.tvAge.text = item.employeeAge.toString()
-            binding.tvSalary.text = item.employeeSalary.toString()
+            binding.property = item
             binding.executePendingBindings()
         }
 
@@ -38,6 +36,9 @@ class EmployeeAdapter : ListAdapter<EmployeeProperty, EmployeeAdapter.ViewHolder
                 return ViewHolder(binding)
             }
         }
+    }
+    class OnClickListener(val clickListener: (employeeProperty:EmployeeProperty) -> Unit) {
+        fun onClick(employeeProperty: EmployeeProperty) = clickListener(employeeProperty)
     }
 }
 /**

@@ -15,6 +15,7 @@ import com.example.exercise_2.R
 import com.example.exercise_2.databinding.FragmentEmployeeListBinding
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.exercise_2.MainActivity
 import kotlinx.android.synthetic.main.fragment_employee_list.*
 
@@ -39,12 +40,22 @@ class EmployeeListFragment : Fragment() {
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
 
-        val adapter = EmployeeAdapter()
+        val adapter = EmployeeAdapter(EmployeeAdapter.OnClickListener {
+            viewModel.displayPropertyDetails(it)
+        })
+
         binding.viewEmployees.adapter = adapter
 
         viewModel.employees.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+            }
+        })
+
+        viewModel.navigateToSelectedProperty.observe(this, Observer {
+            if ( null != it ) {
+                this.findNavController().navigate(EmployeeListFragmentDirections.actionEmployeeListToDetailFragment(it))
+                viewModel.displayPropertyDetailsComplete()
             }
         })
         return binding.root
