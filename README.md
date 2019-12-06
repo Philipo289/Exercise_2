@@ -28,14 +28,3 @@ In der App werden die Employee Daten der Dummy API angezeigt. Sollte die App ges
 |Dummy REST API |
 | ------------- |
 |               |
-
-```plantuml
-@startuml component
-actor client
-node app
-database db
-
-db -> app
-app -> client
-@enduml
-```
