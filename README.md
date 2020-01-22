@@ -1,8 +1,8 @@
 # Exercise 2 - Mobile Computing WS 2019
-| Name          | Matrikelnummer | Kurs   |
-| ------------- | -------------- | ------ |
-| Dominik Heiny | 300149         | MSI SE |
-| Philip Ebner  | 300453         | MSI SE |
+| Name          |  Kurs  |
+| ------------- | ------ |
+| Dominik Heiny | MSI SE |
+| Philip Ebner  | MSI SE |
 
 ## App: REST API + Offline-Handling
 
